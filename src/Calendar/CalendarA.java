@@ -1,5 +1,8 @@
 package Calendar;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class CalendarA {
@@ -7,6 +10,7 @@ public class CalendarA {
 	static Calendar cal = Calendar.getInstance();
 	static Map sch = new HashMap();
 	static List list = new ArrayList();
+	static String FILE_SAVE = "sch.dat";
 	public static void main(String[] args) {
 		
 		while(true){
@@ -99,6 +103,18 @@ public class CalendarA {
 		list.add(insertSch);
 		sch.put(insertDate, list);
 		
+		String result=insertDate +","+ insertSch+"\n";
+		File f = new File(FILE_SAVE);
+	    try {
+			FileWriter fw = new FileWriter(f,true);
+			fw.write(result);
+			fw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+		
 		
 		System.out.println("일정입력이 완료 되었습니다.");
 		
@@ -108,6 +124,12 @@ public class CalendarA {
 		
 	}
 	public static void search(){
+		File f= new File(FILE_SAVE);
+		
+		if(!f.exists()){
+			System.out.println("스케쥴이 존재하지 않습니다. (파일없음)");
+			return;
+		}
 		System.out.println("[일정검색] 검색할 날짜를 입력하세요 ");
 		scanner.nextLine();
 		String searchDate = scanner.nextLine();
